@@ -1,0 +1,14 @@
+---
+# sambaをインストール
+- name: install samba
+  yum: name=samba state=present
+# /etc/samba/smb.confの設定
+- name: change smb.conf
+  copy: src=smb.conf dest=/etc/samba/smb.conf
+# ユーザの登録
+- name: enable main_user
+  raw: echo -e "{{ l_main_password }}\n{{ l_main_password }}" | pdbedit -a -t -u {{ l_main_username }}
+- name: enable sbm
+  service: name=smb enabled=yes
+- name: start smb
+  service: name=smb state=started

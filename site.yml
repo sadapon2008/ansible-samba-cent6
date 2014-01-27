@@ -1,0 +1,16 @@
+---
+# 使い方:
+#   ansible-playbook -i <(echo 10.x.x.x) -u root -k site.yml \
+#     --extra-vars "main_username=username main_password=password"
+# 備考:
+#   - 10.x.x.xは設定対象のホストのIPアドレスを指定してください
+#     rootでsshに接続しようとします
+#   - main_usernameで指定したユーザをSambaで利用可能とし、Sambaのパスワードはpasswordになります
+- name: for Samba on CentOS 6.5 Ver. 20140127
+  hosts: all
+  vars:
+    l_main_username: "{{ main_username }}"
+    l_main_password: "{{ main_password }}"
+  user: root
+  roles:
+    - samba
